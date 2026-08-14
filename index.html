@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<title>Legacy Travel and Services — Flight Booking, Papua New Guinea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B2545;
+    --blue:#1B4B91;
+    --sky:#4A8FE0;
+    --paper:#F6F8FC;
+    --ink:#14213D;
+    --gold:#C9A227;
+    --line:#D9E1EE;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk',sans-serif;
+    color:var(--navy);
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'IBM Plex Mono',monospace; letter-spacing:0.02em; }
+  a{ color:inherit; text-decoration:none; }
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,248,252,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.15rem; color:var(--navy);}
+  .logo-mark{
+    width:38px; height:38px; border-radius:8px;
+    object-fit:contain; flex:none;
+  }
+  .foot-logo .logo-mark{ background:var(--white); padding:2px; }
+  .navlinks{ display:flex; gap:36px; font-size:0.95rem; font-weight:500; color:var(--ink); }
+  .navlinks a{ opacity:0.75; transition:opacity .2s; }
+  .navlinks a:hover{ opacity:1; }
+  .nav-cta{
+    background:var(--navy); color:var(--white); padding:11px 22px;
+    border-radius:6px; font-weight:600; font-size:0.9rem;
+  }
+  .nav-cta:hover{ background:var(--blue); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(1100px 500px at 82% -10%, rgba(74,143,224,0.35), transparent 60%),
+      linear-gradient(180deg, var(--navy) 0%, #0d2c56 55%, #123a72 100%);
+    color:var(--white);
+    overflow:hidden;
+  }
+  .hero .wrap{ padding-top:88px; padding-bottom:64px; position:relative; }
+  .hero-logo{
+    width:92px; height:92px; object-fit:contain;
+    background:var(--white); border-radius:16px; padding:8px;
+    box-shadow:0 20px 40px -12px rgba(3,15,40,0.5);
+    margin-bottom:28px;
+  }
+  .route-eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.78rem;
+    color:#BFD4F5; letter-spacing:0.08em; text-transform:uppercase;
+    border:1px solid rgba(191,212,245,0.35); padding:6px 14px; border-radius:999px;
+    margin-bottom:28px;
+  }
+  .hero h1{
+    color:var(--white);
+    font-size:clamp(2.3rem, 4.6vw, 3.6rem);
+    font-weight:700; line-height:1.08; max-width:720px;
+  }
+  .hero h1 em{ font-style:normal; color:var(--gold); }
+  .hero p.lead{
+    max-width:520px; margin-top:20px; font-size:1.08rem; color:#CBDAF2;
+  }
+
+  /* boarding pass search card */
+  .ticket{
+    margin-top:44px;
+    background:var(--white); color:var(--ink);
+    border-radius:14px;
+    box-shadow:0 30px 60px -20px rgba(3,15,40,0.5);
+    display:flex; max-width:920px;
+    position:relative;
+  }
+  .ticket-main{ flex:1; padding:28px 26px; display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:20px; align-items:end;}
+  .field label{
+    display:block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem;
+    text-transform:uppercase; letter-spacing:0.09em; color:#7C8AA5; margin-bottom:6px;
+  }
+  .field input{
+    width:100%; border:none; border-bottom:2px solid var(--line);
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.05rem;
+    color:var(--navy); padding:6px 2px; background:transparent;
+  }
+  .field input:focus{ outline:none; border-color:var(--sky); }
+  .search-btn{
+    background:var(--gold); color:var(--navy); border:none;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:0.95rem;
+    padding:14px 26px; border-radius:8px; cursor:pointer; white-space:nowrap;
+    transition:transform .15s ease, background .2s;
+  }
+  .search-btn:hover{ background:#DCB542; transform:translateY(-1px); }
+  .ticket-stub{
+    width:120px; flex:none; background:var(--navy); color:var(--white);
+    border-radius:0 14px 14px 0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:6px; position:relative;
+  }
+  .ticket-stub::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:0;
+    border-left:2px dashed rgba(255,255,255,0.35);
+  }
+  .ticket-stub .code{ font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:1.4rem; letter-spacing:0.05em;}
+  .ticket-stub .tag{ font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:#9FB6DE; }
+  .ticket::before, .ticket::after{
+    content:""; position:absolute; width:22px; height:22px; background:var(--paper);
+    border-radius:50%; top:50%; transform:translateY(-50%);
+  }
+  .ticket::before{ right:118px; }
+
+  .hero-stats{ display:flex; gap:44px; margin-top:56px; flex-wrap:wrap; }
+  .hstat .num{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.7rem; color:var(--white);}
+  .hstat .lbl{ font-size:0.82rem; color:#9FB6DE; margin-top:2px; }
+
+  /* ---------- ROUTES / SECTION SHARED ---------- */
+  section{ padding:96px 0; }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:0.75rem; text-transform:uppercase;
+    letter-spacing:0.1em; color:var(--blue); margin-bottom:14px; display:block; font-weight:600;
+  }
+  .section-head{ max-width:620px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(1.7rem,3vw,2.3rem); font-weight:700; }
+  .section-head p{ margin-top:14px; color:#4C5A78; font-size:1.02rem; }
+
+  .routes-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+  .route-card{ background:var(--white); padding:26px 24px; }
+  .route-pair{ display:flex; align-items:center; gap:10px; font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--navy); font-size:1.05rem;}
+  .route-pair .dash{ flex:1; height:1px; background:var(--line); position:relative; }
+  .route-pair .dash::after{ content:"✈"; position:absolute; right:-2px; top:-9px; font-size:0.8rem; color:var(--sky); transform:rotate(90deg);}
+  .route-city{ font-size:0.82rem; color:#6C7A98; margin-top:8px; }
+  .route-price{ margin-top:18px; display:flex; align-items:baseline; justify-content:space-between;}
+  .route-price .from{ font-size:0.72rem; color:#8894AC; text-transform:uppercase; letter-spacing:0.06em;}
+  .route-price .amt{ font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--navy); font-size:1.3rem;}
+  .route-note{ font-size:0.74rem; color:#8894AC; margin-top:8px; display:flex; align-items:center; gap:6px; }
+  .route-note::before{ content:"~"; color:var(--gold); font-weight:700; }
+
+  /* ---------- SERVICES ---------- */
+  .svc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .svc-card{
+    background:var(--white); border:1px solid var(--line); border-radius:12px;
+    padding:28px 24px; transition:border-color .2s, transform .2s;
+  }
+  .svc-card:hover{ border-color:var(--sky); transform:translateY(-3px); }
+  .svc-card .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:0.08em; color:var(--gold); background:rgba(201,162,39,0.12);
+    display:inline-block; padding:4px 10px; border-radius:999px; margin-bottom:16px;
+  }
+  .svc-card h3{ font-size:1.08rem; margin-bottom:10px; }
+  .svc-card p{ font-size:0.92rem; color:#5A6884; }
+  .svc-card .route-price{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+  .svc-card.wide{ grid-column:span 1; }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+  .steps::before{
+    content:""; position:absolute; top:23px; left:6%; right:6%; height:1px;
+    background:repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 16px);
+  }
+  .step{ position:relative; padding-right:20px; }
+  .step .idx{
+    width:46px; height:46px; border-radius:50%; background:var(--white); border:2px solid var(--blue);
+    color:var(--blue); font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:0.95rem;
+    display:flex; align-items:center; justify-content:center; margin-bottom:22px; position:relative; z-index:1;
+  }
+  .step h3{ font-size:1.08rem; margin-bottom:8px; }
+  .step p{ font-size:0.92rem; color:#5A6884; }
+
+  /* ---------- WHY / FEATURES ---------- */
+  .feat-band{ background:var(--navy); color:var(--white); }
+  .feat-band .eyebrow{ color:#9FB6DE; }
+  .feat-band .section-head h2{ color:var(--white); }
+  .feat-band .section-head p{ color:#BFD0EC; }
+  .feat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+  .feat-card{
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12);
+    border-radius:12px; padding:30px 26px;
+  }
+  .feat-card .mark{ color:var(--gold); font-family:'IBM Plex Mono',monospace; font-size:0.8rem; margin-bottom:16px; display:block;}
+  .feat-card h3{ color:var(--white); font-size:1.1rem; margin-bottom:10px;}
+  .feat-card p{ color:#B9C9E5; font-size:0.92rem; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+  .about-copy p{ color:#4C5A78; margin-bottom:16px; font-size:1.02rem; }
+  .about-visual{
+    background:linear-gradient(160deg, var(--blue), var(--navy));
+    border-radius:16px; height:340px; position:relative; overflow:hidden;
+  }
+  .about-visual .pass{
+    position:absolute; inset:24px; border:1px dashed rgba(255,255,255,0.3); border-radius:10px;
+    display:flex; flex-direction:column; justify-content:space-between; padding:22px; color:white;
+  }
+  .about-visual .pass .top{ display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:#BFD4F5;}
+  .about-visual .pass .route{ font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700; display:flex; align-items:center; gap:14px;}
+  .about-visual .pass .route span.arrow{ color:var(--gold); font-size:1.3rem;}
+  .about-visual .pass .bottom{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:#9FB6DE; display:flex; justify-content:space-between;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-band{ background:var(--paper); border-top:1px solid var(--line); }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; }
+  .contact-info h2{ font-size:2rem; margin-bottom:18px; }
+  .contact-info p{ color:#4C5A78; margin-bottom:26px; max-width:420px; }
+  .contact-line{ display:flex; gap:12px; margin-bottom:14px; font-size:0.95rem; }
+  .contact-line .k{ font-family:'IBM Plex Mono',monospace; color:var(--blue); font-weight:600; width:90px; flex:none;}
+  form.cform{ background:var(--white); border:1px solid var(--line); border-radius:14px; padding:32px; }
+  .cform label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.08em; color:#7C8AA5; margin-bottom:6px;}
+  .cform input, .cform textarea{
+    width:100%; border:1px solid var(--line); border-radius:8px; padding:11px 13px;
+    font-family:'Inter',sans-serif; font-size:0.95rem; margin-bottom:18px; background:var(--paper); color:var(--ink);
+  }
+  .cform textarea{ resize:vertical; min-height:90px;}
+  .cform input:focus, .cform textarea:focus{ outline:none; border-color:var(--sky); background:var(--white); }
+  .cform button{
+    width:100%; background:var(--navy); color:var(--white); border:none; padding:14px;
+    border-radius:8px; font-weight:600; font-family:'Space Grotesk',sans-serif; cursor:pointer; font-size:0.98rem;
+  }
+  .cform button:hover{ background:var(--blue); }
+  .form-note{ font-size:0.76rem; color:#8894AC; margin-top:12px; text-align:center; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background:var(--navy); color:#9FB6DE; padding:44px 0; }
+  .foot-grid{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+  .foot-logo{ display:flex; align-items:center; gap:10px; color:var(--white); font-weight:700; font-family:'Space Grotesk',sans-serif;}
+  .foot-links{ display:flex; gap:28px; font-size:0.88rem; }
+  .foot-links a:hover{ color:var(--white); }
+  .foot-bottom{ font-size:0.78rem; margin-top:24px; color:#6E82A9; }
+
+  @media (max-width: 860px){
+    .navlinks{ display:none; }
+    .ticket{ flex-direction:column; }
+    .ticket-main{ grid-template-columns:1fr 1fr; }
+    .ticket-stub{ border-radius:0 0 14px 14px; flex-direction:row; padding:14px; width:auto;}
+    .ticket-stub::before{ display:none; }
+    .ticket::before{ display:none; }
+    .routes-grid{ grid-template-columns:1fr; }
+    .steps{ grid-template-columns:1fr 1fr; row-gap:36px; }
+    .steps::before{ display:none; }
+    .feat-grid{ grid-template-columns:1fr; }
+    .about-grid, .contact-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo"><img class="logo-mark" src="assets/logo.png" alt="Legacy Travel and Services logo">Legacy Travel and Services</div>
+    <div class="navlinks">
+      <a href="#routes">Flights</a>
+      <a href="#services">Services</a>
+      <a href="#how">How it works</a>
+      <a href="#why">Why us</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#book" class="nav-cta">Book a flight</a>
+  </nav>
+</header>
+
+<section class="hero" id="book">
+  <div class="wrap" style="position:relative;">
+    <img class="hero-logo" src="assets/logo.png" alt="Legacy Travel and Services logo">
+    <span class="route-eyebrow">● Serving all 22 provinces of Papua New Guinea</span>
+    <h1>Flights out of PNG,<br><em>booked in minutes</em>, not days.</h1>
+    <p class="lead">Legacy Travel and Services books flights and handles the paperwork that goes with travel — visa lodgement, biometrics appointments and passport applications — for people across all 22 provinces of Papua New Guinea.</p>
+
+    <div class="ticket">
+      <div class="ticket-main">
+        <div class="field">
+          <label>From</label>
+          <input type="text" value="Port Moresby (POM)">
+        </div>
+        <div class="field">
+          <label>To</label>
+          <input type="text" placeholder="e.g. Brisbane (BNE)">
+        </div>
+        <div class="field">
+          <label>Depart</label>
+          <input type="text" placeholder="Select date">
+        </div>
+        <button class="search-btn">Search flights</button>
+      </div>
+      <div class="ticket-stub">
+        <div class="code">POM</div>
+        <div class="tag">Boarding</div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat"><div class="num">22</div><div class="lbl">Provinces served nationwide</div></div>
+      <div class="hstat"><div class="num">18+</div><div class="lbl">Domestic &amp; regional routes</div></div>
+      <div class="hstat"><div class="num">24/7</div><div class="lbl">Booking support</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="routes">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Popular routes</span>
+      <h2>Connecting all 22 provinces from Port Moresby</h2>
+      <p>Fares shown are indicative starting prices for economy, one-way, and fluctuate with seasonal demand. Final price is confirmed at checkout.</p>
+    </div>
+    <div class="routes-grid">
+      <div class="route-card">
+        <div class="route-pair">POM<span class="dash"></span>LAE</div>
+        <div class="route-city">Port Moresby → Lae, Morobe Province</div>
+        <div class="route-price"><span class="from">From</span><span class="amt">K650</span></div>
+        <div class="route-note">Varies with season &amp; demand</div>
+      </div>
+      <div class="route-card">
+        <div class="route-pair">POM<span class="dash"></span>HGU</div>
+        <div class="route-city">Port Moresby → Mount Hagen</div>
+        <div class="route-price"><span class="from">From</span><span class="amt">K720</span></div>
+        <div class="route-note">Varies with season &amp; demand</div>
+      </div>
+      <div class="route-card">
+        <div class="route-pair">POM<span class="dash"></span>RAB</div>
+        <div class="route-city">Port Moresby → Rabaul, East New Britain</div>
+        <div class="route-price"><span class="from">From</span><span class="amt">K890</span></div>
+        <div class="route-note">Varies with season &amp; demand</div>
+      </div>
+      <div class="route-card">
+        <div class="route-pair">POM<span class="dash"></span>CNS</div>
+        <div class="route-city">Port Moresby → Cairns, Australia</div>
+        <div class="route-price"><span class="from">From</span><span class="amt">K1,450</span></div>
+        <div class="route-note">Varies with season &amp; demand</div>
+      </div>
+      <div class="route-card">
+        <div class="route-pair">POM<span class="dash"></span>BNE</div>
+        <div class="route-city">Port Moresby → Brisbane, Australia</div>
+        <div class="route-price"><span class="from">From</span><span class="amt">K1,690</span></div>
+        <div class="route-note">Varies with season &amp; demand</div>
+      </div>
+      <div class="route-card">
+        <div class="route-pair">POM<span class="dash"></span>MNL</div>
+        <div class="route-city">Port Moresby → Manila, Philippines</div>
+        <div class="route-price"><span class="from">From</span><span class="amt">K2,180</span></div>
+        <div class="route-note">Varies with season &amp; demand</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Our services</span>
+      <h2>More than flights — the whole trip, sorted</h2>
+      <p>From booking your ticket to getting your travel documents in order, our booking desk handles the paperwork so you don't have to chase it yourself — wherever in PNG you're applying from.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card">
+        <span class="tag">Flights</span>
+        <h3>Flight ticket booking</h3>
+        <p>Domestic and international flight search and booking, priced in kina with no hidden fees.</p>
+      </div>
+      <div class="svc-card">
+        <span class="tag">Visa</span>
+        <h3>Tourist visa lodgement</h3>
+        <p>We prepare and lodge tourist visa applications for your destination country, and track the application until approval.</p>
+        <div class="route-price"><span class="from">Service fee</span><span class="amt">K810</span></div>
+      </div>
+      <div class="svc-card">
+        <span class="tag">Visa</span>
+        <h3>Business visa lodgement</h3>
+        <p>Documentation and lodgement support for business and work-related travel visas, including invitation letter guidance.</p>
+        <div class="route-price"><span class="from">Service fee</span><span class="amt">K810</span></div>
+      </div>
+      <div class="svc-card">
+        <span class="tag">Biometrics</span>
+        <h3>Biometrics appointment booking</h3>
+        <p>We book and confirm your biometrics appointment slot and let you know exactly what to bring on the day.</p>
+        <div class="route-price"><span class="from">Service fee</span><span class="amt">K100</span></div>
+      </div>
+      <div class="svc-card">
+        <span class="tag">Passport</span>
+        <h3>Passport lodgement services</h3>
+        <p>Help completing and lodging new passport and renewal applications, with document checklists so nothing gets rejected.</p>
+        <div class="route-price"><span class="from">New / renewal</span><span class="amt">K250</span></div>
+      </div>
+      <div class="svc-card">
+        <span class="tag">Passport</span>
+        <h3>Passport fast track</h3>
+        <p>Priority lodgement and processing for passport applications when you're on a tighter travel timeline.</p>
+        <div class="route-price"><span class="from">Fast track</span><span class="amt">K450</span></div>
+      </div>
+      <div class="svc-card">
+        <span class="tag">Support</span>
+        <h3>Application tracking</h3>
+        <p>Once lodged, we follow up on your visa, biometrics or passport application and update you at each stage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Process</span>
+      <h2>Four steps, whether it's a flight or a visa</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="idx">01</div>
+        <h3>Tell us what you need</h3>
+        <p>A flight, a visa lodgement, a biometrics slot, or a passport application — send us the details online.</p>
+      </div>
+      <div class="step">
+        <div class="idx">02</div>
+        <h3>We prepare it</h3>
+        <p>We check fares or put together the document checklist, so you know exactly what's needed and what it costs.</p>
+      </div>
+      <div class="step">
+        <div class="idx">03</div>
+        <h3>Book and pay</h3>
+        <p>Pay securely by card or bank transfer. Your booking or lodgement is confirmed by email and SMS.</p>
+      </div>
+      <div class="step">
+        <div class="idx">04</div>
+        <h3>We follow through</h3>
+        <p>Your ticket, appointment confirmation, or lodgement receipt is ready — and we track it until it's done.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="feat-band" id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Why Legacy Travel and Services</span>
+      <h2>Built for how people in PNG actually book travel</h2>
+      <p>We started Legacy Travel and Services because booking a flight — or lodging a visa, or getting to a biometrics appointment — out of Port Moresby shouldn't mean a morning off work standing in a queue.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <span class="mark">01 / Local</span>
+        <h3>Priced in kina</h3>
+        <p>See exact fares in PGK from the first search — no currency conversion surprises at checkout.</p>
+      </div>
+      <div class="feat-card">
+        <span class="mark">02 / Support</span>
+        <h3>A real person, on call</h3>
+        <p>Our booking desk answers by phone or WhatsApp if a flight changes or you need help mid-trip.</p>
+      </div>
+      <div class="feat-card">
+        <span class="mark">03 / Flexible</span>
+        <h3>Bank transfer or card</h3>
+        <p>Pay how you actually pay — including bank transfer for travellers without a card.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-copy">
+      <span class="eyebrow">About us</span>
+      <h2>A booking desk built in Port Moresby, for PNG travellers</h2>
+      <p>Legacy Travel and Services is an online travel service based in Port Moresby, Papua New Guinea, serving clients in all 22 provinces. We book domestic and international flights, and handle the paperwork that goes with travel — tourist and business visa lodgement, biometrics appointments, and passport applications.</p>
+      <p>We're a small local team — we know the routes people actually fly, the documents each visa office actually wants, and the questions first-time applicants ask, whether you're booking from Port Moresby or a provincial centre. That's what we've built the service around.</p>
+    </div>
+    <div class="about-visual">
+      <div class="pass">
+        <div class="top"><span>LEGACY TAS</span><span>ECONOMY</span></div>
+        <div class="route">POM <span class="arrow">→</span> LAE</div>
+        <div class="bottom"><span>GATE 04</span><span>SEAT 14C</span><span>BOARDING 09:40</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-band" id="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-info">
+      <span class="eyebrow">Get in touch</span>
+      <h2>Talk to the booking desk</h2>
+      <p>Have a question about a route, a group booking, or an existing reservation? Reach us directly — we reply the same day.</p>
+      <div class="contact-line"><span class="k">Phone</span><span>+675 8130 4898</span></div>
+      <div class="contact-line"><span class="k">Email</span><span>legacytas@outlook.com</span></div>
+      <div class="contact-line"><span class="k">Office</span><span>Port Moresby, NCD — serving all 22 provinces</span></div>
+      <div class="contact-line"><span class="k">Hours</span><span>Mon–Sat, 8:00am–6:00pm</span></div>
+    </div>
+    <form class="cform" action="https://formspree.io/f/legacytas@outlook.com" method="POST">
+      <label>Full name</label>
+      <input type="text" name="name" placeholder="Your name" required>
+      <label>Email</label>
+      <input type="email" name="email" placeholder="you@email.com" required>
+      <label>Message</label>
+      <textarea name="message" placeholder="Tell us about the trip you're planning" required></textarea>
+      <input type="hidden" name="_subject" value="New enquiry from Legacy Travel and Services website">
+      <button type="submit">Send message</button>
+      <p class="form-note">First message may ask us to confirm this form — after that, messages arrive straight to our inbox.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-logo"><img class="logo-mark" src="assets/logo.png" alt="Legacy Travel and Services logo">Legacy Travel and Services</div>
+    <div class="foot-links">
+      <a href="#routes">Routes</a>
+      <a href="#how">How it works</a>
+      <a href="#why">Why us</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">© 2026 Legacy Travel and Services, Port Moresby. All fares indicative and subject to availability.</div>
+</footer>
+
+</body>
+</html>
